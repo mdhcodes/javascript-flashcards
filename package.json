@@ -1,0 +1,22 @@
+{
+  "name": "js_flashcards",
+  "version": "1.0.0",
+  "description": "Node.js Flashcard App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdhcodes/javascript-flashcards.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdhcodes/javascript-flashcards/issues"
+  },
+  "homepage": "https://github.com/mdhcodes/javascript-flashcards#readme",
+  "dependencies": {
+    "inquirer": "^3.0.6"
+  }
+}
