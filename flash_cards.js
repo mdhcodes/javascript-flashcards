@@ -1,4 +1,6 @@
+var ClozeCards = require('./cloze_cards.js');
 var basicQuestions = require('./basic.json');
+var clozeQuestions = require('./cloze.json');
 var inquirer = require('inquirer');
 
 // Store user input
@@ -8,13 +10,13 @@ var userName = processArgv[0];
 // Variable to store the user's preference for basic or cloze questions.
 var userAction = processArgv[1];
 
-
 // Variables we will use to loop over the basicQuestions object and store the number of correct answers.
 var index = 0;
 var correct = 0;
 
+
 // Function to display the player's score at the end of the game.
-var getScore = function(correct, incorrect) {
+var getScore = function(correct) {
   console.log('Game Over!\n');
   console.log('Your score: ' + correct + '/'  + basicQuestions.length + '\n');
 };
@@ -32,12 +34,69 @@ var gameStatus = function() {
   ]).then(function(user) {
     if(user.playAgain === true) {
       console.log('Great! Let\'s play again!\n');
-      basicGame(basicQuestions);
+        if(userAction === 'basic') {
+          basicGame(basicQuestions);
+        } else {
+          clozeGame(clozeQuestions);
+        }
     } else {
       console.log('Thanks for playing! Goodbye!');
     }
   });
 };
+
+    
+
+//*********** NOT FULLY FUNCTIONAL - getScore() and gameStatus() ****************************************
+//*********** UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection: id 1) ***********
+//*********** Type Error: Cannot read property 'fullText' of undefined **********************************
+// Function to play the game with basic questions.
+var clozeGame = function(questions) {
+  // Create a new Clozecard object to access the ClozeCard methods.
+  var newClozeCards = new ClozeCards(questions[index].fullText, questions[index].cloze);
+  //console.log('Partial Text:', newClozeCards.getPartialText());
+
+  // if statement to ensure that our question prompts stop after all the questions in the questions object have been answered.
+  if (index < questions.length) {
+    //console.log('Length', questions.length);
+    // Execute inquirer and ask the user a series of questions.
+    // Store the user's answers within the variable user inside the .then statement.
+    inquirer.prompt([
+      {
+        type: 'input',
+        name: 'answer',
+        message: newClozeCards.getPartialText()
+      }
+    ]).then(function(user) {
+      // Convert all answers to lower case for scoring accuracy.
+      if (user.answer.toLowerCase() === questions[index].cloze.toLowerCase()) {
+          console.log('You are correct!\n');
+          // If the user answers the question correctly, add one to the correct variable.
+          correct++;
+          // Add one to the index variable to loop over our questions object.
+          index++;
+      } else {
+          // If the user answers the question incorrectly, display the following message.
+          console.log('Incorrect! The correct answer is: '  + newClozeCards.getFullText() + '\n'); //OR
+          //console.log('Incorrect! The correct answer is: '  + questions[index].fullText + '\n'); //OR
+          //console.log('Incorrect! The correct answer is: '  + newClozeCards.fullText + '\n');
+          // Add one to the index variable to loop over our questions object.
+          index++;
+      }
+      // Execute the basicGame function again to end the loop or ask another question.
+      clozeGame(questions);
+    });
+  } else {
+    // After all the questions have been asked and answered, execute the getScore function to display the score.
+    getScore(correct);
+    // Execute the gameStatus function to ask the user if they want to play again or end the game.
+    gameStatus();
+    // Reset the game variables.
+    index = 0;
+    correct = 0;
+  }
+};
+
 
 
 // Function to play the game with basic questions.
@@ -87,6 +146,11 @@ if(userAction === 'basic') {
   console.log('Hi ' + userName + '! Let\'s answer some ' + userAction + ' questions.\n');
   // Execute the basicGame function to play the basic game.
   basicGame(basicQuestions);
+} else if(userAction === 'cloze') {
+  // Display the welcome message.
+  console.log('Hi ' + userName + '! Let\'s answer some ' + userAction + ' questions.\n');
+  // Execute the basicGame function to play the basic game.
+  clozeGame(clozeQuestions);
 } else {
   console.log('Please select the type of questions you\'d like: basic or cloze.');
 }

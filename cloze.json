@@ -1,0 +1,24 @@
+[
+
+  {
+    "fullText": "A callback function is passed to other functions and executed when a specified event occurs.",
+    "cloze": "callback"
+  },
+  {
+    "fullText": "NPM is the Node.js package manager that allows developers to share JavaScript code.",
+    "cloze": "package"
+  },
+  {
+    "fullText": "A pure function is a self-contained function that returns a value only and has no dependency on its external environment (global variables, side effects).",
+    "cloze": "pure"
+  },
+  {
+    "fullText": "Modules provide programs with organization and separation of concerns.",
+    "cloze": "Modules"
+  },
+  {
+    "fullText": "To run a javascript program from the command line, type node + the <path to the file> + any expected parameters and press enter.",
+    "cloze": "node"
+  }
+
+]
