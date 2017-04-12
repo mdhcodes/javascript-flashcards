@@ -1,0 +1,24 @@
+[
+
+  {
+    "front": "What is a function that is passed to other functions and executed when a specified event occurs?",
+    "back": "Callback"
+  },
+  {
+    "front": "What is the Node.js package manager that allows developers to share JavaScript code?",
+    "back": "NPM"
+  },
+  {
+    "front": "What type of function is self-contained, returns a value only, and has no dependency on its external environment (global variables, side effects)?",
+    "back": "Pure"
+  },
+  {
+    "front": "What type of structure provides programs with organization and separation of concerns?",
+    "back": "Modules"
+  },
+  {
+    "front": "What command do you enter in the terminal to run a JavaScript program?",
+    "back": "node"
+  }
+
+]
