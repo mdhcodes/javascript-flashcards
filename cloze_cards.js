@@ -1,5 +1,5 @@
 // Require the BasicCard constructor function exported from basicCard.js.
-var BasicCard = require('./basic_cards.js');
+var BasicCards = require('./basic_cards.js');
 
 
 // Create a ClozeCard constructor that accepts text and cloze arguments.
@@ -21,8 +21,16 @@ ClozeCard.prototype.getPartialText = function(fullText, cloze) {
     return this.fullText.replace(this.cloze, '...');
 }
 
-    // How to check for error?
-    //throw new Error('The cloze deletion did not appear.');
 
+
+// Should throw or log an error because "oops" doesn't appear in "This doesn't work"
+//var brokenCloze("This doesn't work", "oops");
+// Create a ClozeCard method that throws an error when the getPartialText() method does not include '...'
+ClozeCard.prototype.brokenCloze = function(fullText, cloze) {
+    throw new Error('The cloze deletion did not appear.');
+}
+
+
+  
 // Export the ClozeCard constructor function to be required in flashCard.js
 module.exports = ClozeCard;
