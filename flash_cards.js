@@ -195,7 +195,7 @@ var clozeGame = function(questions) {
         // The error appears and the program stops. Remove the brokenCloze to continue.
         newClozeCards.brokenCloze();
       // Convert all answers to lower case for scoring accuracy.
-    } else if (user.answer.toLowerCase() === questions[index].cloze.toLowerCase()) {
+      } else if (user.answer.toLowerCase() === questions[index].cloze.toLowerCase()) {
           console.log('You are correct!\n');
           // If the user answers the question correctly, add one to the correct variable.
           correct++;
