@@ -7,10 +7,10 @@ var clozeQuestions = require('./cloze.json');
 var processArgv = process.argv.slice(2);
 // Variable to store the user's name.
 var userName = processArgv[0];
-// Variable to store the user's preference for basic or cloze questions.
+// Variable to store the user's preference to create or answer basic or cloze questions.
 var userAction = processArgv[1];
 
-// Variables we will use to loop over the basicQuestions object and store the number of correct answers.
+// Variables we will use to loop over the basicQuestions and clozeQuestions objects and store the number of correct answers.
 var index = 0;
 var correct = 0;
 
@@ -99,13 +99,11 @@ var createBasicQues = function(basicQuestions) {
         card.front,
         card.back
       );
-      // Appending questions to the basic.json file is not fully functional.
-      // Adds object to the basic.json file after the array // ]{"front":"asdf","back":"asdf"}{"front":"asdf","back":"asdf"}
-      fs.appendFile('./basic.json', JSON.stringify(newQues), 'utf-8', function(error) {
-        if(error) {
-          throw error;
-        }
-        console.log('New questions were added to the ./basic.json file.');
+      // Reading and rewriting the basic.json file to include the newly created questions.
+      fs.readFile('basic.json', 'utf-8', function(error, data) {
+        var json = JSON.parse(data);
+        json.push(newQues);
+        fs.writeFileSync('basic.json', JSON.stringify(json));
       });
       count++;
       createBasicQues(basicQuestions);
@@ -137,18 +135,16 @@ var createClozeQues = function(clozeQuestions) {
         message: 'Please enter the cloze deletion.'
       }
     ]).then(function (card) {
-
+      // Create a new instance of ClozeCards
       var newQues = new ClozeCards(
         card.fullText,
         card.cloze
       );
-      // Appending questions to the cloze.json file is not fully functional.
-      // Adds object to the cloze.json file after the array // ]{"front":"asdf","back":"asdf"}{"front":"asdf","back":"asdf"}
-      fs.appendFile('./cloze.json', JSON.stringify(newQues), 'utf-8', function(error) {
-        if(error) {
-          throw error;
-        }
-        console.log('New questions were added to the ./cloze.json file.');
+      // Reading and rewriting the cloze.json file to include the newly created questions.
+      fs.readFile('cloze.json', 'utf-8', function(error, data) {
+        var json = JSON.parse(data);
+        json.push(newQues);
+        fs.writeFileSync('cloze.json', JSON.stringify(json));
       });
       count++;
       createClozeQues(clozeQuestions);
@@ -277,7 +273,7 @@ if(userAction === 'basic') {
 } else if(userAction === 'cloze') {
   // Display the welcome message.
   console.log('Hi ' + userName + '! Let\'s answer some ' + userAction + ' questions.\n');
-  // Execute the basicGame function to play the basic game.
+  // Execute the clozeGame function to play the cloze game.
   clozeGame(clozeQuestions);
 } else if(userAction === 'create') {
   // Display the welcome message.
