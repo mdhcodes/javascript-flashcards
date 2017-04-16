@@ -159,7 +159,7 @@ var createClozeQues = function(clozeQuestions) {
 //*********** NOT FULLY FUNCTIONAL - getScore() and gameStatus() ****************************************
 //*********** UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection: id 1) ***********
 //*********** Type Error: Cannot read property 'fullText' of undefined **********************************
-// Function to play the game with basic questions.
+// Function to play the game with cloze questions.
 var clozeGame = function(questions) {
   // Create a new Clozecard object to access the ClozeCard methods.
   var newClozeCards = new ClozeCards(questions[index].fullText, questions[index].cloze);
@@ -181,6 +181,7 @@ var clozeGame = function(questions) {
       // Error logs to the console if the partialText does not contain '...'
       if( !(newClozeCards.getPartialText().includes('...')) ){
         //console.log('Partial Includes ...', newClozeCards.getPartialText().includes('...'));
+
         // Include the code below in the cloze.json file to see brokenCloze error.
         /*
         {
@@ -188,6 +189,7 @@ var clozeGame = function(questions) {
           "cloze": "oops"
         },
         */
+
         // The error appears and the program stops. Remove the brokenCloze to continue.
         newClozeCards.brokenCloze();
       // Convert all answers to lower case for scoring accuracy.
